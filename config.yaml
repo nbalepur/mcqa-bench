@@ -1,0 +1,20 @@
+global:
+  run_name: testing
+  dataset: /fs/clip-quiz/nbalepur/mcqa-bench/local_datasets/ARC/train.csv
+  metrics: [difficulty, shortcuts, contamination, writing_flaws]
+
+metrics:
+
+  difficulty:
+    models: [openai/gpt-4o]
+    use_cot: true
+    parallel: false
+
+  shortcuts:
+    models: [openai/gpt-4o-mini]
+    use_cot: false
+    parallel: false
+
+  contamination: {}
+  writing_flaws: {}
+
