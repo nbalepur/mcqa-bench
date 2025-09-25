@@ -31,14 +31,6 @@ def load_config(config_path: str | None = None) -> Dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError("config.yaml root must be a mapping/object")
 
-    if "global" not in data or not isinstance(data["global"], dict):
-        raise ValueError("config.yaml must define a 'global' mapping")
-
-    g = data["global"]
-    missing = [k for k in ("run_name", "dataset", "metrics") if k not in g]
-    if missing:
-        raise ValueError(f"config.yaml: missing required global fields: {', '.join(missing)}")
-
     if "metrics" not in data or not isinstance(data["metrics"], dict):
         raise ValueError("config.yaml must define a 'metrics' mapping")
 

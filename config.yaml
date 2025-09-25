@@ -1,20 +1,42 @@
-global:
+metrics:
+
   run_name: testing
   dataset: /fs/clip-quiz/nbalepur/mcqa-bench/local_datasets/ARC/train.csv
   metrics: [difficulty, shortcuts, contamination, writing_flaws]
-
-metrics:
+  output_dir: results
 
   difficulty:
-    models: [openai/gpt-4o]
+    models: [openai/gpt-4o, openai/gpt-4o-mini]
     use_cot: true
-    parallel: false
+    skill_file: skills
+    skill_run_name: testing
+    correction_strategy: none # none | filter | rewrite
 
   shortcuts:
-    models: [openai/gpt-4o-mini]
-    use_cot: false
-    parallel: false
+    model: openai/gpt-4o-mini
+    use_cot: true
+    num_shuffles: 3
+    correction_strategy: none # none | filter | rewrite
 
-  contamination: {}
-  writing_flaws: {}
+  contamination:
+    model: openai/gpt-4o-mini
+    use_cot: true
+    correction_strategy: none # none | filter | rewrite
 
+  writing_flaws:
+    model: openai/gpt-4o-mini
+    use_cot: true
+    num_shuffles: 3
+    correction_strategy: none # none | filter | rewrite
+
+skills:
+  models: [openai/gpt-4o-mini, openai/gpt-4o]
+  run_name: anchor
+  skill_file: skills
+  datasets: [/fs/clip-quiz/nbalepur/mcqa-bench/local_datasets/ARC/train.csv,
+             /fs/clip-quiz/nbalepur/mcqa-bench/local_datasets/MMLU/train.csv,
+             /fs/clip-quiz/nbalepur/mcqa-bench/local_datasets/HellaSwag/train.csv,
+             /fs/clip-quiz/nbalepur/mcqa-bench/local_datasets/Super_GPQA/train.csv,
+             /fs/clip-quiz/nbalepur/mcqa-bench/local_datasets/truthful_qa/train.csv,
+             ]
+  use_cot: true

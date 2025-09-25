@@ -13,7 +13,7 @@ def _random_explanation(length: int = 24) -> str:
 
 
 @scorer(metrics=[mean(), stderr()])
-def shortcut_scorer():
+def shortcut_scorer(model: str = "openai/gpt-4o-mini", use_cot: bool = False, num_shuffles: int = 3, correction_strategy: str = "none"):
     async def _score(state: TaskState, target: Target) -> Score:
         value = random.random()
         explanation = _random_explanation()
